@@ -33,8 +33,13 @@ categorical_features = ['Equipo', 'Posicion_Inicio', 'Fase_del_Partido']
 X_train_categorical = X_train[categorical_features]
 X_test_categorical = X_test[categorical_features]
 
+X_train_categorical = pd.get_dummies(X_train_categorical)
+X_test_categorical = pd.get_dummies(X_test_categorical)
 
+# Ver que las columnas categoricas en los conjuntos de training y test sean las mismas
+X_train_categorical, X_test_categorical = X_train_categorical.align(X_test_categorical, join='left', axis=1, fill_value=0)
+input_numeric = Input(shape=(X_train_numeric.shape[1],))
 
-
-
-
+# Entradas categóricas
+input_categorical = Input(shape=(X_train_categorical.shape[1],))
+concatenated = Concatenate()([input_numeric, input_categorical])
