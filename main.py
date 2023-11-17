@@ -4,9 +4,15 @@ import dash_table
 import pandas as pd
 import base64
 import io
+from app import app
+from layout import create_layout
+import callbacks
+import time
 
 # Inicializar la aplicación Dash
-app = dash.Dash(__name__)
+# app = dash.Dash(__name__)
+server = app.server
+app.config.suppress_callback_exceptions = True
 app.title = "Proyecto 2 - Data Science"
 
 # Estilos CSS para mejorar la apariencia
@@ -52,6 +58,7 @@ def update_output(contents, filename):
         try:
             if 'csv' in filename:
                 df = pd.read_csv(io.StringIO(decoded.decode('utf-8')))
+                print(df)
             else:
                 return html.Div(['Tipo de archivo no soportado.'])
 
@@ -60,7 +67,16 @@ def update_output(contents, filename):
                 dash_table.DataTable(
                     data=df.to_dict('records'),
                     columns=[{'name': i, 'id': i} for i in df.columns],
-                    page_size=10
+                    page_size=10,
+                    style_cell={'textAlign': 'left', 'color': 'black'},
+                    style_header={
+                        'backgroundColor': 'rgb(230, 230, 230)',
+                        'fontWeight': 'bold'
+                    },
+                    style_data={
+                        'backgroundColor': 'rgb(248, 248, 248)',
+                        'border': '1px solid black'
+                    }
                 )
             ])
         except Exception as e:
@@ -78,10 +94,10 @@ def update_output(contents, filename):
 )
 def change_page_content(n_clicks):
     if n_clicks > 0:
-        return html.Div([
-            html.H3('Bienvenido a la nueva vista'),
-            # ... (cualquier otro contenido que quieras mostrar)
-        ])
+        for i in range(60):
+            print("Procesando...")
+            time.sleep(0.5)
+        return create_layout()
     else:
         raise dash.exceptions.PreventUpdate
 
