@@ -51,3 +51,9 @@ output = Dense(1)(hidden2)
 
 # Crear modelo
 model = Model(inputs=[input_numeric, input_categorical], outputs=output)
+model.compile(optimizer='adam', loss='mean_squared_error')
+
+# Entrenamiento y evaluacion
+model.fit([X_train_numeric, X_train_categorical], y_train, epochs=10, batch_size=32)
+loss = model.evaluate([X_test_numeric, X_test_categorical], y_test)
+print(f'Loss en el conjunto de prueba: {loss}')
