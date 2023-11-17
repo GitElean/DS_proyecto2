@@ -43,3 +43,11 @@ input_numeric = Input(shape=(X_train_numeric.shape[1],))
 # Entradas categóricas
 input_categorical = Input(shape=(X_train_categorical.shape[1],))
 concatenated = Concatenate()([input_numeric, input_categorical])
+
+# Capas adicionales
+hidden1 = Dense(64, activation='relu')(concatenated)
+hidden2 = Dense(32, activation='relu')(hidden1)
+output = Dense(1)(hidden2)
+
+# Crear modelo
+model = Model(inputs=[input_numeric, input_categorical], outputs=output)
