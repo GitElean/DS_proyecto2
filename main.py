@@ -56,6 +56,7 @@ def update_output(contents, filename):
                 return html.Div(['Tipo de archivo no soportado.'])
 
             return html.Div([
+                html.H5(filename),
                 dash_table.DataTable(
                     data=df.to_dict('records'),
                     columns=[{'name': i, 'id': i} for i in df.columns],
