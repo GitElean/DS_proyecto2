@@ -7,6 +7,8 @@ __pycache__/
 *.so
 
 # Distribution / packaging
+datos_bungesliga.csv
+*.csv
 .Python
 build/
 develop-eggs/
